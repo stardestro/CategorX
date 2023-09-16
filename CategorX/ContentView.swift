@@ -56,16 +56,14 @@ struct CardView: View {
                     .foregroundColor(.accentColor)
                     .cornerRadius(10)
                     .padding(5)
-                    .gesture(DragGesture(minimumDistance: 10)
+                    .gesture(DragGesture(minimumDistance: 0)
                         .onChanged({ value in
-//                            offsetpoint = CGPoint(x: 100, y: 0)
-//                            startpoint = value.startLocation
                             startpoint = CGPoint(x: value.startLocation.x, y: value.startLocation.y + 100)
-                            withAnimation() {
+                            withAnimation(.spring()) {
                                 offsetpoint = CGPoint(x: 150, y: 0)
                             }
                             isDragged = true
-//                            print(value.self)
+
                         })
                         .onEnded({ _ in
                             offsetpoint = CGPoint(x: 0, y: 0)
@@ -73,23 +71,14 @@ struct CardView: View {
                         })
                     
                     )
-//            }
-//            if(isDragged){
-//
-//            }
                 Circle()
                     .fill(Color(UIColor.systemRed))
                     .frame(width: 100, height: 100)
                     .position(startpoint)
-//                    .transformEffect(isDragged)
                     .offset(x:offsetpoint.x)
-//                    .animation(.linear, value: offsetpoint.x > 10)
                     .opacity(isDragged ? 0.7: 0)
                     .cornerRadius(10)
                     .opacity(isDragged ? 1: 0)
-                    
-                    
-//            }
 
             }.padding(10)
         
