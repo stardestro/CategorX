@@ -91,75 +91,12 @@ struct CardView: View {
                     .zIndex(100)
                 
                 ZStack{
-                    
-                    
-                    
                     Rectangle()
-                        .fill(Color(UIColor.systemGray6))
+                        .zIndex(99)
+                        .opacity(0.000001)
                         .cornerRadius(10)
-                        .shadow(radius: 10)
-                    
-                    // Background
-                    Text("LOADING...")
-                        .scaledToFit()
-                        .font(.system(size: 25))
-                    //            GeometryReader { geometry in
-                    VStack(){
-                        Spacer()
-                        HStack{
-                            Spacer()
-                            VStack{
-                                Text("🗞️")
-                                    .font(.system(size: 50))
-                                Text("Paper")
-                                    .font(.system(size: 25))
-                            }
-                            Spacer()
-                            VStack{
-                                Text("🥫")
-                                    .font(.system(size: 50))
-                                Text("Metal")
-                                
-                                    .font(.system(size: 25))
-                            }
-                            Spacer()
-                            VStack{
-                                Text("🫙")
-                                    .font(.system(size: 50))
-                                Text("Glass")
-                                    .font(.system(size: 25))
-                            }
-                            Spacer()
-                            VStack{
-                                Text("🗑️")
-                                    .font(.system(size: 50))
-                                Text("Other")
-                                    .font(.system(size: 25))
-                            }
-                            Spacer()
-                        }
-                        
-                        Spacer()
-                        Image("image"+String(index))
-                            .resizable()
-                            .scaledToFit()
-                        //                        .padding(10)
-                            .foregroundColor(.accentColor)
-                        //                        .cornerRadius(10)
-                        //                        .shadow(radius: 10)
-                        //                        .padding(10)
-                        
-                        Spacer()
-                        
-                        Spacer(minLength: 0)
-                        
-                        Spacer()
-                        //                    Text("🗞️🥫🫙🗑️ \n  Paper Cans ")
-                        //                        .font(.system(size: 40))
-                        
-                    }
-                    .gesture(DragGesture(minimumDistance: 0)
-                        .onChanged({ value in
+                        .gesture(DragGesture(minimumDistance: 0)
+                            .onChanged({ value in
                             startpoint = CGPoint(x: value.startLocation.x, y: value.startLocation.y)
                             withAnimation(.spring(response: scale)) {
                                 offsetpoint = CGPoint(x: 150, y: 0)
@@ -211,6 +148,7 @@ struct CardView: View {
                                 offsetpoint5 = CGPoint(x: 0, y: 0)
                                 isDragged = false
                                 endpoint = CGPoint(x: value.location.x-value.startLocation.x, y: value.location.y - value.startLocation.y)
+                                print(endpoint)
                                 withAnimation(.spring(response: (button == 0) ? 0 : 0.5)) {
                                     scale = 1.0
                                 }
@@ -226,74 +164,74 @@ struct CardView: View {
                              
                     )
                     
-                    ZStack{
-                        Circle()
-                            .fill(Color(UIColor.systemYellow))
-                            .frame(width: 75, height: 75)
-                        
-                        Text("🗞️")
-                            .font(.system(size: 40))
-                            .frame(width: 150, height: 150)
-                    }
-                    .position(startpoint)
-                    .offset(x: offsetpoint.x, y: offsetpoint.y)
-                    .opacity(isDragged ? 0.7: 0)
-                    .cornerRadius(10)
-                    .opacity(isDragged ? 1: 1)
-                    .scaleEffect((button == 1) ? 1.2 : 1)
+                    Rectangle()
+                        .fill(Color(UIColor.systemGray6))
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
                     
-                    ZStack{
-                        Circle()
-                            .fill(Color(UIColor.systemGray2))
-                            .frame(width: 75, height: 75)
+                    // Background
+                    Text("LOADING...")
+                        .scaledToFit()
+                        .font(.system(size: 25))
+                    //            GeometryReader { geometry in
+                    VStack(){
+                        Spacer()
+                        HStack{
+                            Spacer()
+                            VStack{
+                                Text("🗞️")
+                                    .font(.system(size: 50))
+                                Text("Paper")
+                                    .font(.system(size: 25))
+                            }
+                            Spacer()
+                            VStack{
+                                Text("🥫")
+                                    .font(.system(size: 50))
+                                Text("Metal")
+                                
+                                    .font(.system(size: 25))
+                            }
+                            Spacer()
+                            VStack{
+                                Text("🫙")
+                                    .font(.system(size: 50))
+                                Text("Glass")
+                                    .font(.system(size: 25))
+                            }
+                            Spacer()
+                            VStack{
+                                Text("🗑️")
+                                    .font(.system(size: 50))
+                                Text("Other")
+                                    .font(.system(size: 25))
+                            }
+                            Spacer()
+                        }
                         
-                        Text("🗑️")
-                            .font(.system(size: 40))
-                            .frame(width: 150, height: 150)
+                        Spacer()
+//                        AsyncImage(url: URL(string: "https://experiencelife.lifetime.life/wp-content/uploads/2021/02/Talking-Trash.jpg"))
+                        Image("image"+String(index))
+                            .resizable()
+                            .scaledToFit()
+                        //                        .padding(10)
+//                            .foregroundColor(.accentColor)
+                        //                        .cornerRadius(10)
+                        //                        .shadow(radius: 10)
+                        //                        .padding(10)
+                        
+                        Spacer()
+                        
+                        Spacer(minLength: 0)
+                        
+                        Spacer()
+                        //                    Text("🗞️🥫🫙🗑️ \n  Paper Cans ")
+                        //                        .font(.system(size: 40))
+                        
                     }
-                    //                .fill(Color(UIColor.systemRed))
-                    .frame(width: 75, height: 75)
-                    .position(startpoint)
-                    .offset(x: offsetpoint1.x, y: offsetpoint1.y)
-                    .opacity(isDragged ? 0.7: 0)
-                    .cornerRadius(10)
-                    .opacity(isDragged ? 1: 3)
-                    .scaleEffect((button == 3) ? 1.2 : 1)
                     
-                    ZStack{
-                        Circle()
-                            .fill(Color(UIColor.systemRed))
-                            .frame(width: 75, height: 75)
-                        
-                        Text("🥫")
-                            .font(.system(size: 40))
-                            .frame(width: 150, height: 150)
-                    }
-                    //                .fill(Color(UIColor.systemRed))
-                    .frame(width: 75, height: 75)
-                    .position(startpoint)
-                    .offset(x: offsetpoint2.x, y: offsetpoint2.y)
-                    .opacity(isDragged ? 0.7: 0)
-                    .cornerRadius(10)
-                    .opacity(isDragged ? 1: 0)
-                    .scaleEffect((button == 4) ? 1.2 : 1)
                     
-                    ZStack{
-                        Circle()
-                            .fill(Color(UIColor.systemBlue))
-                            .frame(width: 75, height: 75)
-                        
-                        Text("🫙")
-                            .font(.system(size: 40))
-                            .frame(width: 150, height: 150)
-                    }
-                    .frame(width: 75, height: 75)
-                    .position(startpoint)
-                    .offset(x: offsetpoint3.x, y: offsetpoint3.y)
-                    .opacity(isDragged ? 0.7: 0)
-                    .cornerRadius(10)
-                    .opacity(isDragged ? 1: 0)
-                    .scaleEffect((button == 2) ? 1.2 : 1)
+                    
                     
                     
                     
@@ -302,6 +240,74 @@ struct CardView: View {
                 Text("Long Press to Classify")
                     .font(.system(size: 30))
             }
+            ZStack{
+                Circle()
+                    .fill(Color(UIColor.systemYellow))
+                    .frame(width: 75, height: 75)
+                
+                Text("🗞️")
+                    .font(.system(size: 40))
+                    .frame(width: 150, height: 150)
+            }
+            .position(x:(startpoint.x), y: (startpoint.y + 100))
+            .offset(x: offsetpoint.x, y: offsetpoint.y)
+            .opacity(isDragged ? 0.7: 0)
+            .cornerRadius(10)
+            .opacity(isDragged ? 1: 1)
+            .scaleEffect((button == 1) ? 1.2 : 1)
+            
+            ZStack{
+                Circle()
+                    .fill(Color(UIColor.systemGray2))
+                    .frame(width: 75, height: 75)
+                
+                Text("🗑️")
+                    .font(.system(size: 40))
+                    .frame(width: 150, height: 150)
+            }
+            //                .fill(Color(UIColor.systemRed))
+            .frame(width: 75, height: 75)
+            .position(x:(startpoint.x), y: (startpoint.y + 100))
+            .offset(x: offsetpoint1.x, y: offsetpoint1.y)
+            .opacity(isDragged ? 0.7: 0)
+            .cornerRadius(10)
+            .opacity(isDragged ? 1: 3)
+            .scaleEffect((button == 3) ? 1.2 : 1)
+            
+            ZStack{
+                Circle()
+                    .fill(Color(UIColor.systemRed))
+                    .frame(width: 75, height: 75)
+                
+                Text("🥫")
+                    .font(.system(size: 40))
+                    .frame(width: 150, height: 150)
+            }
+            //                .fill(Color(UIColor.systemRed))
+            .frame(width: 75, height: 75)
+            .position(x:(startpoint.x), y: (startpoint.y + 100))
+            .offset(x: offsetpoint2.x, y: offsetpoint2.y)
+            .opacity(isDragged ? 0.7: 0)
+            .cornerRadius(10)
+            .opacity(isDragged ? 1: 0)
+            .scaleEffect((button == 4) ? 1.2 : 1)
+            
+            ZStack{
+                Circle()
+                    .fill(Color(UIColor.systemBlue))
+                    .frame(width: 75, height: 75)
+                
+                Text("🫙")
+                    .font(.system(size: 40))
+                    .frame(width: 150, height: 150)
+            }
+            .frame(width: 75, height: 75)
+            .position(x:(startpoint.x), y: (startpoint.y + 100))
+            .offset(x: offsetpoint3.x, y: offsetpoint3.y)
+            .opacity(isDragged ? 0.7: 0)
+            .cornerRadius(10)
+            .opacity(isDragged ? 1: 0)
+            .scaleEffect((button == 2) ? 1.2 : 1)
         }
     }
 }
