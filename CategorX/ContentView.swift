@@ -22,6 +22,11 @@ struct ContentView: View {
     }
 }
 
+struct item: Codable {
+    let image: Int
+    let category: String
+}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -53,7 +58,9 @@ struct CardView: View {
     
 //    @State private var names = ["glass2", "cardboard3"]
     
-    @State private var index = 1
+    @State var category = String("STARTUP")
+    
+    @State private var index = 5
     
     @State private var SoundNumber: SystemSoundID = 1163
     
@@ -152,7 +159,27 @@ struct CardView: View {
                                 withAnimation(.spring(response: (button == 0) ? 0 : 0.5)) {
                                     scale = 1.0
                                 }
+                                if(button == 1){
+                                    category = "Paper"
+                                    
+                                    // paper
+                                }
+                                if(button == 2){
+                                    category = "Glass"
+                                }
+                                if(button == 3){
+                                    category = "Other"
+                                    //other
+                                }
+                                if(button == 4){
+                                    
+                                    category = "Metal"
+                                }
                                 spring = 0
+                                Task(priority: .userInitiated) {
+                                   _ = await placeOrder(ID: index, Category: category)
+                                }
+                                
                                 if(button != 0){
                                     index = Int.random(in: 1..<177)
                                 }
@@ -161,8 +188,11 @@ struct CardView: View {
                                 SoundNumber = 1163
                                 
                             })
-                             
+                            
                     )
+                        .task{
+                                await placeOrder(ID: index, Category: category)
+                        }
                     
                     Rectangle()
                         .fill(Color(UIColor.systemGray6))
@@ -210,7 +240,6 @@ struct CardView: View {
                         }
                         
                         Spacer()
-//                        AsyncImage(url: URL(string: "https://experiencelife.lifetime.life/wp-content/uploads/2021/02/Talking-Trash.jpg"))
                         Image("image"+String(index))
                             .resizable()
                             .scaledToFit()
@@ -311,3 +340,44 @@ struct CardView: View {
         }
     }
 }
+
+
+func placeOrder(ID: Int, Category: String) async {
+    guard let url =  URL(string:"http://127.0.0.1:8090/api/collections/Images_demo/records")
+            else{
+                return
+            }
+
+            //### This is a little bit simplified. You may need to escape `username` and `password` when they can contain some special characters...
+//            let body = "category=1"
+//            let finalBody = body.data(using: .utf8)
+            let encoder = JSONEncoder()
+//            encoder.outputFormatting = .prettyPrinted
+            let body = item(image: ID, category: Category)
+            let finalBody = try? encoder.encode(body)
+//            catch{
+//                print(finalBody)
+//            }
+//            print("\(finalBody)")
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = finalBody
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+            URLSession.shared.dataTask(with: request){
+                (data, response, error) in
+                print(response as Any)
+                if let error = error {
+                    print(error)
+                    return
+                }
+                guard let data = data else{
+                    return
+                }
+                print(data, String(data: data, encoding: .utf8) ?? "*unknown encoding*")
+
+            }.resume()
+
+}
+
